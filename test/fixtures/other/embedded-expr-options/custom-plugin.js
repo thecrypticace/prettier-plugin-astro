@@ -1,6 +1,6 @@
-import prettierParserBabel from 'prettier/parser-babel';
+import * as astro from '../../../../dist/index.js';
 
-let original = prettierParserBabel.parsers['babel-ts'];
+let original = astro.parsers.expressionParser
 
 export const options = {
 	customPluginClass: {
@@ -13,9 +13,10 @@ export const options = {
 };
 
 export const parsers = {
-	'babel-ts': {
-		parse(text, parsers, options) {
-			let ast = original.parse(text, parsers, options);
+	expressionParser: {
+		...original,
+		parse(text, options) {
+			let ast = original.parse(text, options);
 
 			let nodes = [ast.program];
 			while (nodes.length) {
